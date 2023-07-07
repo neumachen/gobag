@@ -1,21 +1,26 @@
 package gobag
 
 import (
-	"io/ioutil"
-	"path/filepath"
+	"os"
+	"strings"
 )
 
 // CreateTempFile ...
-func CreateTempFile(fileContent []byte, directory, dirPrefix, fileName string) (string, string, error) {
-	dir, err := ioutil.TempDir(dirPrefix, directory)
+func CreateTempFile(fileContent []byte, dirPrefix, fileName string) (*os.File, error) {
+	tmpFile, err := os.Create(
+		strings.Join([]string{
+			os.TempDir(),
+			dirPrefix,
+			fileName,
+		}, "/"),
+	)
 	if err != nil {
-		return "", "", Errx(err)
+		return nil, err
 	}
 
-	tmpfn := filepath.Join(dir, fileName)
-	err = ioutil.WriteFile(tmpfn, fileContent, 0666)
+	err = os.WriteFile(tmpFile.Name(), fileContent, 0666)
 	if err != nil {
-		return "", "", Errx(err)
+		return nil, err
 	}
-	return dir, tmpfn, nil
+	return tmpFile, nil
 }
