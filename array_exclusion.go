@@ -58,32 +58,3 @@ func SliceExclusionInts(source, reference []int) ([]int, []int) {
 	}
 	return elementsOnlyInSource, elementsOnlyInReference
 }
-
-// SliceExclusion performs an exclusion operation on two slices, sourceSlice
-// and reference. It returns two slices: elementsOnlyInSource contains elements
-// that are present in sourceSlice but not in reference, and
-// elementsOnlyInReference contains elements that are present in reference but
-// not in sourceSlice. The elements must be of a comparable type, denoted by
-// the type parameter T.
-func SliceExclusion[T comparable](source, reference []T) ([]T, []T) {
-	presenceMap := make(map[T]uint8)
-	for _, k := range source {
-		presenceMap[k] |= (1 << 0)
-	}
-	for _, k := range reference {
-		presenceMap[k] |= (1 << 1)
-	}
-
-	var elementsOnlyInSource, elementsOnlyInReference []T
-	for element, presence := range presenceMap {
-		isPresentInSource := presence&(1<<0) != 0
-		isPresentInReference := presence&(1<<1) != 0
-		switch {
-		case isPresentInSource && !isPresentInReference:
-			elementsOnlyInSource = append(elementsOnlyInSource, element)
-		case !isPresentInSource && isPresentInReference:
-			elementsOnlyInReference = append(elementsOnlyInReference, element)
-		}
-	}
-	return elementsOnlyInSource, elementsOnlyInReference
-}
