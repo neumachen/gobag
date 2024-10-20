@@ -48,9 +48,9 @@ func IsNilOrZeroValue(v interface{}) bool {
 	switch valueOf.Kind() {
 	case reflect.Chan, reflect.Func, reflect.Interface, reflect.Map, reflect.Ptr, reflect.Slice:
 		return valueOf.IsNil() || valueOf.IsZero()
+	default:
+		return false
 	}
-
-	return false
 }
 
 // AreAllNil checks if all the given interfaces are nil.
@@ -107,4 +107,3 @@ func IsEqualBytes(a, b []byte) bool {
 func StringIsEmpty(str string) bool {
 	return strings.TrimSpace(str) == ""
 }
-
