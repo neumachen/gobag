@@ -20,7 +20,7 @@ func ArrayIsEmpty(arr ArrayLengther) bool {
 
 // IsNil checks if the given interface is nil.
 // It returns true if the input is nil, and false otherwise.
-func IsNil(v interface{}) bool {
+func IsNil(v any) bool {
 	if v == nil {
 		return true
 	}
@@ -38,7 +38,7 @@ func IsNil(v interface{}) bool {
 // IsNilOrZeroValue checks if the given interface is nil or has a zero value.
 // It returns true if the input is nil, or if it is of certain kinds (Chan, Func, Interface, Map, Ptr, Slice)
 // and it is either nil or has a zero value. For MakeSlice kind, it returns false.
-func IsNilOrZeroValue(v interface{}) bool {
+func IsNilOrZeroValue(v any) bool {
 	if v == nil {
 		return true
 	}
@@ -55,7 +55,7 @@ func IsNilOrZeroValue(v interface{}) bool {
 
 // AreAllNil checks if all the given interfaces are nil.
 // It returns true if all inputs are nil, and false otherwise.
-func AreAllNil(v ...interface{}) bool {
+func AreAllNil(v ...any) bool {
 	for i := range v {
 		if !IsNil(v[i]) {
 			return false
@@ -66,7 +66,7 @@ func AreAllNil(v ...interface{}) bool {
 
 // OneIsNil checks if at least one of the given interfaces is nil.
 // It returns true if at least one input is nil, and false otherwise.
-func OneIsNil(v ...interface{}) bool {
+func OneIsNil(v ...any) bool {
 	for i := range v {
 		if IsNil(v[i]) {
 			return true
